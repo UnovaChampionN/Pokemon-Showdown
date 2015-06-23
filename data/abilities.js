@@ -3256,6 +3256,7 @@ exports.BattleAbilities = {
 		rating: 3.5,
 		num: -4
 	},
+	/* Kyoru */
 	"hoarfrost": {
 		desc: "The Pokemon with this ability has its ice type moves boosted by 1.5x damage when hit by an ice-type move. It also has an ice immunity..",
 		shortDesc: "The Pokemon with this ability has its ice type moves boosted by 1.5x damage when hit by an ice-type move. It also has an ice immunity.",
@@ -3299,7 +3300,7 @@ exports.BattleAbilities = {
 		rating: 3,
 		num: -200
 	},
-	"frostbite": {
+		"frostbite": {
 		shortDesc: "When the opponent uses a physical move on the Pokemon with this ability, the opponent has a 10% chance to become frozen.",
 		onAfterDamage: function (damage, target, source, move) {
 			if (move && move.flags['contact']) {
@@ -3312,5 +3313,25 @@ exports.BattleAbilities = {
 		name: "Frostbite",
 		rating: 1,
 		num: -201
+	},
+		"overawe": {
+		desc: "On switch-in, this Pokemon lowers the Special Attack of adjacent opposing Pokemon by 1 stage.",
+		shortDesc: "On switch-in, this Pokemon lowers the Special Attack of adjacent opponents by 1 stage.",
+		onStart: function (pokemon) {
+			var foeactive = pokemon.side.foe.active;
+			for (var i = 0; i < foeactive.length; i++) {
+				if (!foeactive[i] || !this.isAdjacent(foeactive[i], pokemon)) continue;
+				if (foeactive[i].volatiles['substitute']) {
+					this.add('-activate', foeactive[i], 'Substitute', 'ability: Overawe', '[of] ' + pokemon);
+				} else {
+					this.add('-ability', pokemon, 'ability: Owerawe', '[of] ' + foeactive[i]);
+					this.boost({spa: -1}, foeactive[i], pokemon);
+				}
+			}
+		},
+		id: "overawe",
+		name: "Overawe",
+		rating: 3,
+		num: -202
 	}
 };
