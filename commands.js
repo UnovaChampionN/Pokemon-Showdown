@@ -76,13 +76,7 @@ var commands = exports.commands = {
 		if (!target) return this.parse('/avatars');
 		var parts = target.split(',');
 		var avatar = parseInt(parts[0]);
-		if (!avatar || avatar > 294 || avatar < 1) {
-			if (!parts[1]) {
-				this.sendReply("Invalid avatar.");
-			}
-			return false;
-		}
-
+	
 		user.avatar = avatar;
 		if (!parts[1]) {
 			this.sendReply("Avatar changed to:\n" +
