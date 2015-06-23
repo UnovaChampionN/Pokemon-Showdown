@@ -3266,8 +3266,9 @@ exports.BattleAbilities = {
 			}
 		},
 		id: "frostbite",
+		isNonstandard: true,
 		name: "Frostbite",
-		rating: 1,
-		num: -201
+		rating: 2,
+		num: -201,
 	}
 };
