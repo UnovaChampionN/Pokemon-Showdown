@@ -3255,5 +3255,19 @@ exports.BattleAbilities = {
 		// implemented in the corresponding move
 		rating: 3.5,
 		num: -4
+	},
+	"frostbite": {
+		shortDesc: "When the opponent uses a physical move on the Pokemon with this ability, the opponent has a 10% chance to become frozen.",
+		onAfterDamage: function (damage, target, source, move) {
+			if (move && move.flags['contact']) {
+				if (this.random(10) < 1) {
+					source.trySetStatus('frz', target, move);
+				}
+			}
+		},
+		id: "frostbite",
+		name: "Frostbite",
+		rating: 1,
+		num: -201
 	}
 };
