@@ -3256,6 +3256,49 @@ exports.BattleAbilities = {
 		rating: 3.5,
 		num: -4
 	},
+	"hoarfrost": {
+		desc: "The Pokemon with this ability has its ice type moves boosted by 1.5x damage when hit by an ice-type move. It also has an ice immunity..",
+		shortDesc: "The Pokemon with this ability has its ice type moves boosted by 1.5x damage when hit by an ice-type move. It also has an ice immunity.",
+		onTryHit: function (target, source, move) {
+			if (target !== source && move.type === 'Ice') {
+				move.accuracy = true;
+				if (!target.addVolatile('hoarfrost')) {
+					this.add('-immune', target, '[msg]');
+				}
+				return null;
+			}
+		},
+		onEnd: function (pokemon) {
+			pokemon.removeVolatile('hoarfrost');
+		},
+		effect: {
+			noCopy: true,
+			onStart: function (target) {
+				this.add('-start', target, 'ability: Hoarfrost');
+			},
+			onModifyAtkPriority: 5,
+			onModifyAtk: function (atk, attacker, defender, move) {
+				if (move.type === 'Ice') {
+					this.debug('Hoarfrost boost');
+					return this.chainModify(1.5);
+				}
+			},
+			onModifySpAPriority: 5,
+			onModifySpA: function (atk, attacker, defender, move) {
+				if (move.type === 'Fire') {
+					this.debug('Hoarfrost boost');
+					return this.chainModify(1.5);
+				}
+			},
+			onEnd: function (target) {
+				this.add('-end', target, 'ability: Hoarfrost', '[silent]');
+			}
+		},
+		id: "hoarfrost",
+		name: "Hoarfrost",
+		rating: 3,
+		num: -200
+	},
 	"frostbite": {
 		shortDesc: "When the opponent uses a physical move on the Pokemon with this ability, the opponent has a 10% chance to become frozen.",
 		onAfterDamage: function (damage, target, source, move) {
