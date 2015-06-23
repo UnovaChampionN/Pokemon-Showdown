@@ -3269,6 +3269,6 @@ exports.BattleAbilities = {
 		isNonstandard: true,
 		name: "Frostbite",
 		rating: 2,
-		num: -201,
+		num: -201
 	}
 };
